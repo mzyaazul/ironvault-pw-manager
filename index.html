@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IronVault</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Login/Signup Screen -->
+  <div id="screen-auth" class="screen">
+    <div class="lock-card">
+      <div class="brand" style="margin-top:0;">IronVault<span>.</span></div>
+      <div class="tagline">Sign in to sync your vault</div>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="text" id="auth-email" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label>Account password</label>
+        <div class="pw-row">
+          <input type="password" id="auth-password" autocomplete="current-password" placeholder="••••••••••">
+          <button class="icon-btn" data-toggle="auth-password">show</button>
+        </div>
+      </div>
+
+      <button class="btn" id="btn-signin">Sign in</button>
+      <button class="btn secondary" id="btn-signup" style="margin-top:10px;">Create account</button>
+      <div class="error-msg" id="auth-error"></div>
+      <div class="hint">
+        This account password only gets you into your Supabase-backed account.
+        It is completely separate from the master password that encrypts your
+        vault — you'll set that up next, and it never leaves your browser.
+      </div>
+    </div>
+  </div>
+
+  <!-- Setup Screen -->
+  <div id="screen-setup" class="screen hidden">
+    <div class="lock-card">
+      <div class="dial-wrap">
+        <svg class="dial" id="dial-setup" viewBox="0 0 120 120">
+          <circle class="ring" cx="60" cy="60" r="52" />
+          <circle class="ring2" cx="60" cy="60" r="44" />
+          <g id="ticks-setup"></g>
+          <circle class="center" cx="60" cy="60" r="18" />
+          <line class="pointer" x1="60" y1="60" x2="60" y2="24" />
+        </svg>
+      </div>
+      <div class="brand">IronVault<span>.</span></div>
+      <div class="tagline">A private, offline vault for your credentials</div>
+
+      <div class="field">
+        <label>Create master password</label>
+        <div class="pw-row">
+          <input type="password" id="setup-pw" autocomplete="new-password" placeholder="At least 10 characters">
+          <button class="icon-btn" data-toggle="setup-pw">show</button>
+        </div>
+        <div class="strength">
+          <div class="strength-fill" id="strength-fill"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Confirm master password</label>
+        <div class="pw-row">
+          <input type="password" id="setup-pw2" autocomplete="new-password" placeholder="Re-enter password">
+          <button class="icon-btn" data-toggle="setup-pw2">show</button>
+        </div>
+      </div>
+
+      <button class="btn" id="btn-create-vault">Create vault</button>
+      <div class="error-msg" id="setup-error"></div>
+      <div class="hint">
+        This password unlocks everything and is never stored anywhere.
+        If you lose it, the vault cannot be recovered — that's the point.
+      </div>
+    </div>
+  </div>
+
+  <!-- Unlock Screen -->
+  <div id="screen-unlock" class="screen hidden">
+    <div class="lock-card">
+      <div class="dial-wrap">
+        <svg class="dial" id="dial-unlock" viewBox="0 0 120 120">
+          <circle class="ring" cx="60" cy="60" r="52" />
+          <circle class="ring2" cx="60" cy="60" r="44" />
+          <g id="ticks-unlock"></g>
+          <circle class="center" cx="60" cy="60" r="18" />
+          <line class="pointer" x1="60" y1="60" x2="60" y2="24" />
+        </svg>
+      </div>
+      <div class="brand">IronVault<span>.</span></div>
+      <div class="tagline">Enter your master password to unlock</div>
+
+      <div class="field">
+        <label>Master password</label>
+        <div class="pw-row">
+          <input type="password" id="unlock-pw" autocomplete="current-password" placeholder="••••••••••">
+          <button class="icon-btn" data-toggle="unlock-pw">show</button>
+        </div>
+      </div>
+      <button class="btn" id="btn-unlock">Unlock vault</button>
+      <div class="error-msg" id="unlock-error"></div>
+
+      <div class="switch-link">
+        <a href="#" id="link-restore">Restore from backup file</a> ·
+        <a href="#" id="link-reset">Erase this vault</a>
+      </div>
+      <input type="file" id="restore-file" accept="application/json" class="hidden">
+    </div>
+  </div>
+
+  <!-- App Shell -->
+  <div id="app" class="app">
+    <div class="sidebar">
+      <div class="sidebar-head">
+        <div class="brand">IronVault<span>.</span></div>
+        <div class="search-box">
+          <span class="icon">⌕</span>
+          <input type="text" id="search" placeholder="Search entries">
+        </div>
+      </div>
+      <div class="entry-list" id="entry-list"></div>
+      <div class="sidebar-foot">
+        <button class="btn" id="btn-new-entry">+ New entry</button>
+        <button class="btn secondary small" id="btn-export">Export backup</button>
+        <button class="btn secondary small" id="btn-lock">Lock vault</button>
+        <button class="btn secondary small" id="btn-signout">Sign out</button>
+      </div>
+    </div>
+
+    <div class="main">
+      <div id="main-empty" class="main-empty">
+        <div class="brand">Select or create an entry</div>
+      </div>
+
+      <div id="main-detail" class="hidden">
+        <div class="toolbar">
+          <div class="title" id="detail-title">Entry</div>
+          <div class="top-actions">
+            <button class="btn secondary small" id="btn-delete-entry">Delete</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="field">
+            <label>Site / service</label>
+            <input type="text" id="f-site" placeholder="e.g. github.com">
+          </div>
+          <div class="row-inline">
+            <div class="field">
+              <label>Username / email</label>
+              <input type="text" id="f-user" placeholder="e.g. jane@example.com">
+            </div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="copy-line">
+              <div class="pw-row" style="flex:1;">
+                <input type="password" id="f-pass" placeholder="••••••••••">
+                <button class="icon-btn" data-toggle="f-pass">show</button>
+              </div>
+              <button class="btn secondary small" id="btn-copy-pass">Copy</button>
+            </div>
+
+            <div class="gen-panel">
+              <div class="gen-row">
+                <span>Generate password — length <b id="gen-len-label">18</b></span>
+              </div>
+              <input type="range" id="gen-len" min="8" max="48" value="18">
+              <div class="gen-opts">
+                <label><input type="checkbox" id="gen-upper" checked> Uppercase</label>
+                <label><input type="checkbox" id="gen-lower" checked> Lowercase</label>
+                <label><input type="checkbox" id="gen-digits" checked> Digits</label>
+                <label><input type="checkbox" id="gen-symbols" checked> Symbols</label>
+              </div>
+              <button class="btn secondary small" id="btn-generate" style="margin-top:10px;">Generate</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Notes</label>
+            <textarea id="f-notes" rows="3" placeholder="Optional"></textarea>
+          </div>
+          <button class="btn" id="btn-save-entry">Save entry</button>
+
+          <div class="security-note">
+            <b>How this is protected:</b> your master password is run through PBKDF2
+            (SHA-256, 200,000 iterations) with a random salt to derive an AES-256 key.
+            The entire vault is encrypted with AES-GCM before it touches storage, and only
+            the ciphertext lives in this browser's local storage. The master password itself
+            is never written anywhere. Copied passwords are cleared from your clipboard
+            automatically after 20 seconds.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

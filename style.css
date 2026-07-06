@@ -1,0 +1,603 @@
+:root {
+    --ink: #10141C;
+    --panel: #161C28;
+    --panel-2: #1D2431;
+    --hairline: #2C3444;
+    --brass: #C6994F;
+    --brass-dim: #8A6E3B;
+    --parchment: #EDEAE3;
+    --steel: #8892A4;
+    --steel-dim: #5B6478;
+    --danger: #C1554A;
+    --danger-dim: #7A3931;
+    --good: #6FA287;
+    --radius: 3px;
+    --serif: 'Fraunces', Georgia, 'Iowan Old Style', serif;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+    --ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@font-face {
+    font-family: 'Fraunces';
+    src: local('Georgia');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(1200px 600px at 15% -10%, rgba(198, 153, 79, 0.06), transparent 60%),
+        var(--ink);
+    color: var(--parchment);
+    font-family: var(--ui);
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: rgba(198, 153, 79, 0.35);
+}
+
+a {
+    color: var(--brass);
+    text-decoration: none;
+}
+
+/* Layout shells */
+.screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Lock screen */
+.lock-card {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+}
+
+.brand {
+    font-family: var(--serif);
+    font-size: 34px;
+    letter-spacing: 0.5px;
+    margin: 22px 0 4px;
+    color: var(--parchment);
+}
+
+.brand span {
+    color: var(--brass);
+}
+
+.tagline {
+    font-size: 13px;
+    color: var(--steel);
+    margin-bottom: 34px;
+    letter-spacing: 0.3px;
+}
+
+/* rotary dial signature element */
+.dial-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 6px;
+}
+
+.dial {
+    width: 120px;
+    height: 120px;
+    transition: transform 900ms cubic-bezier(.2, .9, .15, 1.15);
+}
+
+.dial.spin {
+    transform: rotate(300deg);
+}
+
+.dial circle.ring {
+    fill: none;
+    stroke: var(--hairline);
+    stroke-width: 1.5;
+}
+
+.dial circle.ring2 {
+    fill: none;
+    stroke: var(--brass-dim);
+    stroke-width: 1;
+}
+
+.dial .tick {
+    stroke: var(--steel-dim);
+    stroke-width: 1.5;
+}
+
+.dial .tick.major {
+    stroke: var(--brass);
+    stroke-width: 2;
+}
+
+.dial .center {
+    fill: var(--panel-2);
+    stroke: var(--brass);
+    stroke-width: 1.5;
+}
+
+.dial .pointer {
+    stroke: var(--brass);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+}
+
+.field {
+    margin-bottom: 14px;
+    text-align: left;
+}
+
+.field label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--steel);
+    margin-bottom: 6px;
+}
+
+input[type=password],
+input[type=text],
+input[type=number],
+textarea,
+select {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    color: var(--parchment);
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 11px 12px;
+    outline: none;
+    transition: border-color 150ms ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--brass);
+}
+
+.pw-row {
+    position: relative;
+}
+
+.pw-row input {
+    padding-right: 42px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--steel);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--ui);
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px 6px;
+}
+
+.icon-btn:hover {
+    color: var(--brass);
+}
+
+button {
+    font-family: var(--ui);
+    cursor: pointer;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--brass);
+    background: var(--brass);
+    color: #161006;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    transition: transform 80ms ease, background 150ms ease;
+}
+
+.btn:hover {
+    background: #D6A85E;
+}
+
+.btn:active {
+    transform: scale(0.99);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: var(--parchment);
+    border: 1px solid var(--hairline);
+    font-weight: 500;
+}
+
+.btn.secondary:hover {
+    border-color: var(--brass-dim);
+    color: var(--brass);
+}
+
+.btn.danger {
+    background: transparent;
+    border: 1px solid var(--danger-dim);
+    color: var(--danger);
+    font-weight: 500;
+}
+
+.btn.danger:hover {
+    background: rgba(193, 85, 74, 0.12);
+}
+
+.btn.small {
+    width: auto;
+    padding: 8px 14px;
+    font-size: 12.5px;
+}
+
+.strength {
+    height: 3px;
+    background: var(--hairline);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--danger);
+    transition: all 200ms ease;
+}
+
+.error-msg {
+    font-size: 12.5px;
+    color: var(--danger);
+    margin-top: 10px;
+    min-height: 16px;
+}
+
+.hint {
+    font-size: 12px;
+    color: var(--steel-dim);
+    margin-top: 14px;
+    line-height: 1.5;
+}
+
+.switch-link {
+    font-size: 12.5px;
+    color: var(--steel);
+    margin-top: 18px;
+}
+
+/* Vault app shell */
+.app {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.app.active {
+    display: flex;
+}
+
+.sidebar {
+    width: 300px;
+    min-width: 300px;
+    background: var(--panel);
+    border-right: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar-head {
+    padding: 20px 18px 14px;
+    border-bottom: 1px solid var(--hairline);
+}
+
+.sidebar-head .brand {
+    font-size: 20px;
+    margin: 0 0 12px;
+    text-align: left;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding-left: 32px;
+    font-family: var(--ui);
+    font-size: 13px;
+}
+
+.search-box .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--steel-dim);
+    font-size: 13px;
+}
+
+.entry-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px 0;
+}
+
+.entry-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--hairline);
+    cursor: pointer;
+}
+
+.entry-row:hover {
+    background: var(--panel-2);
+}
+
+.entry-row.active {
+    background: var(--panel-2);
+    border-left: 2px solid var(--brass);
+    padding-left: 16px;
+}
+
+.entry-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--steel-dim);
+    min-width: 20px;
+}
+
+.entry-meta .site {
+    font-size: 14px;
+    color: var(--parchment);
+}
+
+.entry-meta .user {
+    font-size: 11.5px;
+    color: var(--steel);
+    font-family: var(--mono);
+}
+
+.empty-list {
+    padding: 24px 18px;
+    color: var(--steel-dim);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.sidebar-foot {
+    padding: 14px 18px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.main {
+    flex: 1;
+    padding: 34px 44px;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.main-empty {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--steel-dim);
+}
+
+.main-empty .brand {
+    font-size: 26px;
+    opacity: 0.6;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 26px;
+}
+
+.toolbar .title {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--parchment);
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 26px;
+    max-width: 640px;
+}
+
+.row-inline {
+    display: flex;
+    gap: 14px;
+}
+
+.row-inline .field {
+    flex: 1;
+}
+
+.copy-line {
+    display: flex;
+    gap: 8px;
+}
+
+.copy-line input {
+    flex: 1;
+}
+
+.gen-panel {
+    margin-top: 6px;
+    padding: 14px;
+    background: var(--panel-2);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+}
+
+.gen-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    color: var(--steel);
+}
+
+.gen-opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--steel);
+}
+
+.gen-opts label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+input[type=range] {
+    width: 100%;
+    accent-color: var(--brass);
+}
+
+input[type=checkbox] {
+    accent-color: var(--brass);
+}
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--panel-2);
+    border: 1px solid var(--brass-dim);
+    color: var(--parchment);
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+    font-family: var(--mono);
+    z-index: 50;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+.top-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.security-note {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--hairline);
+    font-size: 12px;
+    color: var(--steel-dim);
+    line-height: 1.7;
+    max-width: 560px;
+}
+
+.security-note b {
+    color: var(--steel);
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 12, 17, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+}
+
+.modal {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 400px;
+    padding: 24px;
+}
+
+.modal h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    margin-top: 0;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--hairline);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+@media (max-width:720px) {
+    .app.active {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        position: relative;
+    }
+
+    .main {
+        height: auto;
+        padding: 22px;
+    }
+}
