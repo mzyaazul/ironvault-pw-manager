@@ -1,11 +1,11 @@
-# IronVault — a zero-knowledge password vault
+# Zero-knowledge Password Vault (IronVault)
 
 A password manager where the server (Supabase) never sees a plaintext
 password from users. Encryption happens entirely
 in the browser with the native Web Crypto API before anything reaches the
 database.
 
-**[Live demo →](#)** *(GitHub Pages / Netlify / Vercel URL)*
+**[Live demo →](#)** *[IronVault](https://ironvault-pw-manager.netlify.app/)*
 
 ## Skills this project demonstrates
 
@@ -60,7 +60,7 @@ database.
   dashboard access to the project, only ever stores and serves opaque
   bytes.
 
-## Honest limitations 
+##  Limitations 
 
 - **No brute-force lockout.** Everything client-side means no server can
   rate-limit unlock attempts. The 200,000-iteration PBKDF2 cost is the only
