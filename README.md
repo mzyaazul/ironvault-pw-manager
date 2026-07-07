@@ -5,7 +5,7 @@ password from users. Encryption happens entirely
 in the browser with the native Web Crypto API before anything reaches the
 database.
 
-**[Live demo →](#)** *[IronVault](https://ironvault-pw-manager.netlify.app/)*
+*Live demo →* **[IronVault](https://ironvault-pw-manager.netlify.app/)**
 
 ## Skills this project demonstrates
 
